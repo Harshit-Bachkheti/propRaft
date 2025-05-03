@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PropRaft | Create Beautiful Property Listings in Minutes</title>
+    <meta name="description" content="Free online tool to create professional property listing pages. Generate mobile-friendly real estate listings with photos, contact info, and maps in minutes.">
+    <meta name="keywords" content="property listing, real estate page generator, create property website, free listing tool">
+    <meta name="author" content="PropRaft">
+    <link rel="icon" href="https://via.placeholder.com/32" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4a6fa5;
+            --secondary-color: #166088;
+            --accent-color: #4fc3f7;
+            --dark-color: #1a2a3a;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            overflow-x: hidden;
+        }
+        
+        /* Animated Gradient Background */
+        .gradient-bg {
+            background: linear-gradient(-45deg, #4a6fa5, #166088, #4fc3f7, #1a2a3a);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+        }
+        
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .hero-section {
+            color: white;
+            padding: 6rem 0 5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 40%;
+            background: url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80') no-repeat center right;
+            background-size: cover;
+            opacity: 0.2;
+        }
+        
+        /* Floating animation */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        /* Feature cards with hover effects */
+        .feature-card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+            height: 100%;
+            overflow: hidden;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(74, 111, 165, 0.1), rgba(22, 96, 136, 0.1));
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+        
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover .feature-icon {
+            transform: rotate(15deg) scale(1.2);
+            color: var(--secondary-color);
+        }
+        
+        /* Buttons with pulse effect */
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            padding: 12px 30px;
+            font-weight: 600;
+            border-radius: 50px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        .btn-primary:active {
+            transform: translateY(1px);
+        }
+        
+        /* How It Works section */
+        .how-it-works {
+            background-color: #f8f9fa;
+            padding: 6rem 0;
+            position: relative;
+        }
+        
+        .step-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2.5rem 2rem;
+            height: 100%;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .step-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .step-card:hover .step-number {
+            background: var(--secondary-color);
+            transform: scale(1.1);
+        }
+        
+        /* Testimonials with floating cards */
+        .testimonials {
+            padding: 6rem 0;
+            background: url('https://images.unsplash.com/photo-1560520031-3a4dc4e9de0c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center;
+            background-size: cover;
+            position: relative;
+        }
+        
+        .testimonials::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(26, 42, 58, 0.8);
+        }
+        
+        .testimonial-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2.5rem;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            position: relative;
+            transition: all 0.5s ease;
+            transform-style: preserve-3d;
+        }
+        
+        .testimonial-card:hover {
+            transform: translateY(-10px) rotateX(5deg);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        
+        .testimonial-card::before {
+            content: """;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 5rem;
+            color: rgba(74, 111, 165, 0.1);
+            font-family: Georgia, serif;
+            line-height: 1;
+            z-index: 0;
+        }
+        
+        .user-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary-color);
+            transition: all 0.3s ease;
+        }
+        
+        .testimonial-card:hover .user-avatar {
+            border-color: var(--secondary-color);
+            transform: scale(1.1);
+        }
+        
+        /* CTA Section with parallax effect */
+        .cta-section {
+            color: white;
+            padding: 6rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center;
+            background-size: cover;
+            z-index: -1;
+            transform: translateZ(-1px) scale(1.2);
+        }
+        
+        .cta-section::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(26, 42, 58, 0.8);
+            z-index: -1;
+        }
+        
+        /* Template preview with 3D tilt effect */
+        .template-preview {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            transition: all 0.5s ease;
+            transform-style: preserve-3d;
+        }
+        
+        .template-preview:hover {
+            transform: perspective(1000px) rotateX(5deg) rotateY(5deg) scale(1.05);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.2);
+        }
+        
+        /* Animated navbar */
+        .navbar {
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            padding: 15px 0;
+        }
+        
+        .navbar.scrolled {
+            padding: 10px 0;
+            background: rgba(255, 255, 255, 0.95) !important;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            color: var(--dark-color);
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .navbar-brand span {
+            color: var(--primary-color);
+        }
+        
+        .navbar.scrolled .navbar-brand {
+            font-size: 1.3rem;
+        }
+        
+        .nav-link {
+            font-weight: 500;
+            position: relative;
+            margin: 0 10px;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        /* Floating rocket logo */
+        .rocket-icon {
+            position: absolute;
+            right: 10%;
+            top: 50%;
+            font-size: 10rem;
+            color: rgba(255, 255, 255, 0.1);
+            animation: float 8s ease-in-out infinite;
+            transform: rotate(-45deg);
+        }
+        
+        /* Scroll progress indicator */
+        .progress-container {
+            width: 100%;
+            height: 4px;
+            background: transparent;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+        
+        .progress-bar {
+            height: 4px;
+            background: var(--primary-color);
+            width: 0%;
+            transition: width 0.1s ease;
+        }
+        
+        /* Footer with wave animation */
+        .wave-divider {
+            position: relative;
+            height: 100px;
+            overflow: hidden;
+        }
+        
+        .wave-divider svg {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .wave-path {
+            animation: wave 15s linear infinite;
+        }
+        
+        @keyframes wave {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Scroll Progress Indicator -->
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <span>Prop</span>Raft
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#how-it-works">How It Works</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#templates">Templates</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#testimonials">Testimonials</a>
+                    </li>
+                    <li class="nav-item ms-lg-3">
+                        <a class="btn btn-primary" href="/generator.html">Get Started</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section gradient-bg">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6" data-aos="fade-right" data-aos-duration="800">
+                    <h1 class="display-4 fw-bold mb-4">Create Stunning Property Listings in Minutes</h1>
+                    <p class="lead mb-5">PropRaft helps real estate professionals and property owners create beautiful, mobile-friendly listing pages with no coding required.</p>
+                    <div class="d-flex gap-3">
+                        <a href="/propRaft/Property-Page-Generator.html" class="btn btn-light btn-lg px-4">Start Creating <i class="fas fa-arrow-right ms-2"></i></a>
+                        <a href="#how-it-works" class="btn btn-outline-light btn-lg px-4">Learn More</a>
+                    </div>
+                </div>
+                <div class="col-lg-6 d-none d-lg-block" data-aos="fade-left" data-aos-duration="800" data-aos-delay="200">
+                    <div class="floating">
+                        <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Property Listing" class="img-fluid rounded-3 shadow-lg">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <i class="fas fa-rocket rocket-icon"></i>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-5">
+        <div class="container py-5">
+            <div class="text-center mb-5" data-aos="fade-up">
+                <h2 class="fw-bold">Powerful Features</h2>
+                <p class="lead text-muted">Everything you need to create professional property listings</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-card p-4 text-center">
+                        <div class="feature-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h4>Mobile-Friendly</h4>
+                        <p class="text-muted">All generated pages look great on any device, from smartphones to desktops.</p>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-card p-4 text-center">
+                        <div class="feature-icon">
+                            <i class="fas fa-images"></i>
+                        </div>
+                        <h4>Image Galleries</h4>
+                        <p class="text-muted">Showcase your property with beautiful image galleries and carousels.</p>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="feature-card p-4 text-center">
+                        <div class="feature-icon">
+                            <i class="fas fa-share-alt"></i>
+                        </div>
+                        <h4>Easy Sharing</h4>
+                        <p class="text-muted">Share your listings via social media, email, or generate QR codes.</p>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-card p-4 text-center">
+                        <div class="feature-icon">
+                            <i class="fas fa-map-marked-alt"></i>
+                        </div>
+                        <h4>Embed Maps</h4>
+                        <p class="text-muted">Add Google Maps to show the property location to potential buyers.</p>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-card p-4 text-center">
+                        <div class="feature-icon">
+                            <i class="fas fa-palette"></i>
+                        </div>
+                        <h4>Multiple Templates</h4>
+                        <p class="text-muted">Choose from several professionally designed templates.</p>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="feature-card p-4 text-center">
+                        <div class="feature-icon">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <h4>Multi-Currency</h4>
+                        <p class="text-muted">Display prices in USD, EUR, GBP and more with automatic formatting.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="how-it-works">
+        <div class="container py-5">
+            <div class="text-center mb-5" data-aos="fade-up">
+                <h2 class="fw-bold">How It Works</h2>
+                <p class="lead text-muted">Create your perfect property page in just 3 easy steps</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="step-card">
+                        <div class="step-number">1</div>
+                        <h4>Enter Property Details</h4>
+                        <p>Fill out the simple form with your property information, photos, and contact details.</p>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="step-card">
+                        <div class="step-number">2</div>
+                        <h4>Choose a Template</h4>
+                        <p>Select from our professionally designed templates to showcase your property.</p>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="step-card">
+                        <div class="step-number">3</div>
+                        <h4>Publish & Share</h4>
+                        <p>Download your page, get a shareable link, or generate a QR code for print materials.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-5" data-aos="fade-up" data-aos-delay="400">
+                <a href="/propRaft/Property-Page-Generator.html" class="btn btn-primary btn-lg px-5">Try It Now</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Templates Preview -->
+    <section id="templates" class="py-5 bg-white">
+        <div class="container py-5">
+            <div class="text-center mb-5" data-aos="fade-up">
+                <h2 class="fw-bold">Beautiful Templates</h2>
+                <p class="lead text-muted">Choose the perfect design for your property</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="template-preview">
+                        <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Modern Template" class="img-fluid">
+                        <div class="p-4 border-top">
+                            <h5 class="mb-0">Modern</h5>
+                            <small class="text-muted">Clean, contemporary design</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="template-preview">
+                        <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Classic Template" class="img-fluid">
+                        <div class="p-4 border-top">
+                            <h5 class="mb-0">Classic</h5>
+                            <small class="text-muted">Timeless elegance</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="template-preview">
+                        <img src="https://images.unsplash.com/photo-1484154218962-a197022b5858?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Minimal Template" class="img-fluid">
+                        <div class="p-4 border-top">
+                            <h5 class="mb-0">Minimal</h5>
+                            <small class="text-muted">Simple and focused</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section id="testimonials" class="testimonials">
+        <div class="container py-5">
+            <div class="text-center mb-5" data-aos="fade-up">
+                <h2 class="fw-bold text-white">What Our Users Say</h2>
+                <p class="lead text-white-50">Trusted by real estate professionals worldwide</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="testimonial-card">
+                        <p class="mb-4 position-relative">"PropRaft saved me so much time! I can now create beautiful property pages in minutes instead of hours."</p>
+                        <div class="d-flex align-items-center">
+                            <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Sarah Johnson" class="user-avatar me-3">
+                            <div>
+                                <h6 class="mb-0">Sarah Johnson</h6>
+                                <small class="text-muted">Real Estate Agent, London</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="testimonial-card">
+                        <p class="mb-4 position-relative">"The QR code feature is genius! I print them on my flyers and potential buyers can instantly access all property details."</p>
+                        <div class="d-flex align-items-center">
+                            <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Michael Chen" class="user-avatar me-3">
+                            <div>
+                                <h6 class="mb-0">Michael Chen</h6>
+                                <small class="text-muted">Property Developer, Singapore</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="testimonial-card">
+                        <p class="mb-4 position-relative">"As a small property owner, I couldn't afford a web developer. PropRaft gave me professional listings at no cost!"</p>
+                        <div class="d-flex align-items-center">
+                            <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Emma Rodriguez" class="user-avatar me-3">
+                            <div>
+                                <h6 class="mb-0">Emma Rodriguez</h6>
+                                <small class="text-muted">Property Owner, Miami</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container" data-aos="fade-up">
+            <h2 class="display-5 fw-bold mb-4">Ready to Create Your Property Listing?</h2>
+            <p class="lead mb-5">Join thousands of real estate professionals who use PropRaft to showcase their properties</p>
+            <a href="/propRaft/Property-Page-Generator.html" class="btn btn-light btn-lg px-5 py-3">Get Started For Free</a>
+        </div>
+    </section>
+
+    <!-- Wave Divider -->
+    <div class="wave-divider">
+        <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path class="wave-path" d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" fill="#4a6fa5"></path>
+            <path class="wave-path" d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" fill="#4a6fa5"></path>
+            <path class="wave-path" d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" fill="#4a6fa5"></path>
+        </svg>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4" data-aos="fade-up">
+                    <h5 class="mb-4"><span>Prop</span>Raft</h5>
+                    <p>The easiest way to create beautiful property listing pages. No coding required.</p>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="100">
+                    <h5 class="mb-4">Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#features" class="text-white text-decoration-none">Features</a></li>
+                        <li class="mb-2"><a href="#how-it-works" class="text-white text-decoration-none">How It Works</a></li>
+                        <li class="mb-2"><a href="#templates" class="text-white text-decoration-none">Templates</a></li>
+                        <li class="mb-2"><a href="#testimonials" class="text-white text-decoration-none">Testimonials</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+                    <h5 class="mb-4">Resources</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">Help Center</a></li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">Blog</a></li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">Privacy Policy</a></li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 mb-4" data-aos="fade-up" data-aos-delay="300">
+                    <h5 class="mb-4">Connect With Us</h5>
+                    <div class="d-flex gap-3 mb-4">
+                        <a href="#" class="text-white"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                    <p><i class="fas fa-envelope me-2"></i> hello@propraft.com</p>
+                </div>
+            </div>
+            <hr class="my-4 bg-secondary">
+            <div class="text-center">
+                <p class="mb-0">&copy; 2023 PropRaft. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS (Animate On Scroll)
+        AOS.init({
+            once: true,
+            duration: 800,
+            easing: 'ease-in-out'
+        });
+        
+        // Scroll progress indicator
+        window.onscroll = function() {
+            updateProgressBar();
+            updateNavbar();
+        };
+        
+        function updateProgressBar() {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById("progressBar").style.width = scrolled + "%";
+        }
+        
+        function updateNavbar() {
+            if (window.scrollY > 50) {
+                document.querySelector('.navbar').classList.add('scrolled');
+            } else {
+                document.querySelector('.navbar').classList.remove('scrolled');
+            }
+        }
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Add hover effect to template cards
+        const templatePreviews = document.querySelectorAll('.template-preview');
+        templatePreviews.forEach(preview => {
+            preview.addEventListener('mousemove', (e) => {
+                const x = e.clientX - preview.getBoundingClientRect().left;
+                const y = e.clientY - preview.getBoundingClientRect().top;
+                
+                const centerX = preview.offsetWidth / 2;
+                const centerY = preview.offsetHeight / 2;
+                
+                const angleX = (y - centerY) / 20;
+                const angleY = (centerX - x) / 20;
+                
+                preview.style.transform = `perspective(1000px) rotateX(${angleX}deg) rotateY(${angleY}deg) scale(1.05)`;
+            });
+            
+            preview.addEventListener('mouseleave', () => {
+                preview.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>
